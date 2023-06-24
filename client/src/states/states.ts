@@ -1,4 +1,4 @@
-const states ={
+const states = {
 	MENU: "MENU",
 	SEND_MESSAGE: "SEND_MESSAGE",
 	SHOW_POSTS: "SHOW_POSTS",
@@ -6,7 +6,7 @@ const states ={
 	BROWSE_POSTS: "BROWSE_POSTS",
 	ADD_USER: "ADD_USER",
 	UNKNOWN: "UNKNOWN",
+	DEFAULT: "DEFAULT",
 } as const;
 
 export type States = typeof states[keyof typeof states];
-

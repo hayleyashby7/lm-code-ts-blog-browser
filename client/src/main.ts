@@ -20,7 +20,7 @@ async function main() {
 	let state: State = new State();
 
 	while (true) {
-		const action = stateActions(state.get());
+		const action = stateActions(state.get()) || stateActions("DEFAULT");
 		state.set((await action()) as States);
 	}
 }
@@ -63,6 +63,9 @@ const stateActions = (state: States) => {
 			print("😵 We have entered an unknown state.");
 			await returnToMainMenu();
 			return "MENU" as States;
+		},
+		DEFAULT: () => {
+			exit(99);
 		},
 	};
 
