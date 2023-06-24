@@ -1,22 +1,56 @@
 import { States } from "../states/states";
 import { clear, print, printNewLine, prompt } from "../ui/console";
 
+type menuOption = { id: number; description: string; action: () => States };
+
+const menuOptions: menuOption[] = [
+	{
+		id: 0,
+		description: "0. Send Server Message",
+		action: () => {
+			return "SEND_MESSAGE";
+		},
+	},
+	{
+		id: 1,
+		description: "1. Show all posts",
+		action: () => {
+			return "SHOW_POSTS";
+		},
+	},
+	{
+		id: 2,
+		description: "2. Show all users",
+		action: () => {
+			return "SHOW_USERS";
+		},
+	},
+	{
+		id: 3,
+		description: "3. Browse posts",
+		action: () => {
+			return "BROWSE_POSTS";
+		},
+	},
+	{
+		id: 4,
+		description: "4. Add user",
+		action: () => {
+			return "ADD_USER";
+		},
+	},
+];
+
 export async function showMenu(): Promise<States> {
 	clear();
-	print("0. Send Server Message", false);
-	print("1. Show all posts", false);
-	print("2. Show all users", false);
-	print("3. Browse posts", false);
-	print("4. Add user", false);
+	menuOptions.forEach((option) => print(option.description, false));
 	printNewLine();
 
 	const result = await prompt("What shall we do? ");
 
-	if (result === "0") return "SEND_MESSAGE";
-	if (result === "1") return "SHOW_POSTS";
-	if (result === "2") return "SHOW_USERS";
-	if (result === "3") return "BROWSE_POSTS";
-	if (result === "4") return "ADD_USER";
+	const option = menuOptions.find((option) => option.id.toString() === result);
+
+	if (option) return option.action();
 
 	return "UNKNOWN";
 }
