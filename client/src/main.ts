@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { exit } from "./exit/exit";
-import { showMenu } from "./menu/menu";
+import { returnToMainMenu, showMenu } from "./menu/menu";
 import { browsePosts } from "./menu/options/browse_posts/browse_posts";
 import { sendMessage } from "./menu/options/send_message/send_message";
 import { showAllPosts } from "./menu/options/show_all_posts/show_all_posts";
@@ -55,13 +55,13 @@ const stateActions = (state: States) => {
 		ADD_USER: async () => {
 			clear();
 			print("🏗️  This functionality has not been implemented!");
-			await prompt("⌨️ Press [ENTER] to return to the main menu! 🕶️");
+			returnToMainMenu();
 			return "MENU" as States;
 		},
 		UNKNOWN: async () => {
 			clear();
 			print("😵 We have entered an unknown state.");
-			await prompt("⌨️ Press [ENTER] to return to the main menu! 🕶️");
+			returnToMainMenu();
 			return "MENU" as States;
 		},
 	};

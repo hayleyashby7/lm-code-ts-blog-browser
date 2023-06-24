@@ -1,5 +1,6 @@
 import { fetchAllUsers } from "../../../api/fetch_all_users";
-import { clear, print, prompt, printNewLine } from "../../../ui/console";
+import { clear, print, printNewLine } from "../../../ui/console";
+import { returnToMainMenu } from "../../menu";
 
 export async function showAllUsers() {
 	clear(true);
@@ -14,8 +15,7 @@ export async function showAllUsers() {
 
 	console.log(result);
 
-	printNewLine();
-	await prompt("⌨️ Press [ENTER] to return to the main menu! 🕶️");
+	returnToMainMenu();
 
 	return result;
 }
