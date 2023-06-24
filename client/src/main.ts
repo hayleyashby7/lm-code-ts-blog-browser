@@ -8,6 +8,7 @@ import { showAllUsers } from "./menu/options/show_all_users/show_all_users";
 import { State } from "./states/state";
 import { States } from "./states/states";
 import { clear, print, prompt } from "./ui/console";
+import { addUser } from "./menu/options/add_user/add_user";
 
 async function begin() {
 	clear(true);
@@ -54,8 +55,7 @@ const stateActions = (state: States) => {
 		},
 		ADD_USER: async () => {
 			clear();
-			print("🏗️  This functionality has not been implemented!");
-			await returnToMainMenu();
+			await addUser();
 			return "MENU" as States;
 		},
 		UNKNOWN: async () => {
