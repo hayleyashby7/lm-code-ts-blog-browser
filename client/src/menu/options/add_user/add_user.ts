@@ -5,14 +5,14 @@ import { returnToMainMenu } from "../../menu";
 export async function addUser(): Promise<void> {
 	clear();
 
-	const user = await prompt("What is the user's name? ");
+	const name = await prompt("What is the user's name? ");
 
 	printNewLine();
-	print(`📨 Adding user "${user}"...`);
+	print(`📨 Adding user "${name}"...`);
 
-	const success = await add_new_user(user);
+	const user = await add_new_user(name);
 
-	if (success === true) print("🥳 User added successfully!");
+	if (user) print(`🥳 User ${user.name} added successfully!`);
 	else print("😵 User NOT added.");
 
 	await returnToMainMenu();
