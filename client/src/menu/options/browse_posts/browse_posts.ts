@@ -1,23 +1,35 @@
 import { fetchPost } from "../../../api/fetch_post";
-import { clear, print, prompt, printNewLine } from "../../../ui/console";
+import { clear, print, prompt } from "../../../ui/console";
+import { inputValidator } from "../utils/input";
+import { returnToMainMenu } from "../../menu";
 
-export async function browsePosts() {
+const validIDRegEx = /^\d+$/;
+
+export async function browsePosts(): Promise<void> {
 	clear(false);
 
+	// Get post ID
 	const desiredPostId = await prompt("Enter Post ID");
 
-	// TODO: should we validate this?!
+	if (!inputValidator(desiredPostId, validIDRegEx)) return invalidPost();
 
-	print(`📨 Fetching post "${desiredPostId}...`);
+	// Fetch post
+	print(`📨 Fetching post ${desiredPostId}...`);
 
 	const result = await fetchPost(desiredPostId);
 
+	if (!result.postFound) return invalidPost();
+
+	// Display post
 	print(`🥳 Received post:`);
 
 	console.log(result);
 
-	printNewLine();
-	await prompt("⌨️ Press [ENTER] to return to the main menu! 🕶️");
-
-	return result;
+	returnToMainMenu();
 }
+
+const invalidPost = async () => {
+	print("🚨 Invalid Post ID! 🚨");
+
+	returnToMainMenu();
+};

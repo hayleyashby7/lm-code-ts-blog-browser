@@ -54,3 +54,9 @@ export async function showMenu(): Promise<States> {
 
 	return "UNKNOWN";
 }
+
+export async function returnToMainMenu() {
+	printNewLine();
+
+	await prompt("⌨️ Press [ENTER] to return to the main menu! 🕶️");
+}
