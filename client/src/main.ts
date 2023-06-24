@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { exit } from "./exit/exit";
 import { showMenu } from "./menu/menu";
 import { browsePosts } from "./menu/options/browse_posts/browse_posts";
@@ -6,7 +7,7 @@ import { showAllPosts } from "./menu/options/show_all_posts/show_all_posts";
 import { showAllUsers } from "./menu/options/show_all_users/show_all_users";
 import { State } from "./states/state";
 import { States } from "./states/states";
-import { clear, print, printNewLine, prompt } from "./ui/console";
+import { clear, print, prompt } from "./ui/console";
 
 async function begin() {
 	clear(true);
