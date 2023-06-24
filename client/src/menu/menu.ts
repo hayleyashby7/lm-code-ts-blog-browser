@@ -6,35 +6,42 @@ type menuOption = { id: number; description: string; action: () => States };
 const menuOptions: menuOption[] = [
 	{
 		id: 0,
-		description: "0. Send Server Message",
+		description: "Send Server Message",
 		action: () => {
 			return "SEND_MESSAGE";
 		},
 	},
 	{
 		id: 1,
-		description: "1. Show all posts",
+		description: "Show all posts",
 		action: () => {
 			return "SHOW_POSTS";
 		},
 	},
 	{
 		id: 2,
-		description: "2. Show all users",
+		description: "Show all users",
 		action: () => {
 			return "SHOW_USERS";
 		},
 	},
 	{
 		id: 3,
-		description: "3. Browse posts",
+		description: "Browse posts",
 		action: () => {
 			return "BROWSE_POSTS";
 		},
 	},
 	{
 		id: 4,
-		description: "4. Add user",
+		description: "Browse users",
+		action: () => {
+			return "BROWSE_USERS";
+		},
+	},
+	{
+		id: 5,
+		description: "Add user",
 		action: () => {
 			return "ADD_USER";
 		},
@@ -43,7 +50,9 @@ const menuOptions: menuOption[] = [
 
 export async function showMenu(): Promise<States> {
 	clear();
-	menuOptions.forEach((option) => print(option.description, false));
+	menuOptions.forEach((option) =>
+		print(`${option.id}. ${option.description}`, false)
+	);
 	printNewLine();
 
 	const result = await prompt("What shall we do? ");
