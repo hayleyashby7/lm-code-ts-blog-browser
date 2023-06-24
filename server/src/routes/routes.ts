@@ -88,11 +88,11 @@ function addAPIRoutes(app: Express) {
 	});
 
 	apiRouter.get("/users/:id", (req, res) => {
-		res
-			.status(200)
-			.send(
-				JSON.stringify(getAllUsers().filter((u) => u.id === req.params.id))
-			);
+		const user = getAllUsers().find((u) => u.id === req.params.id);
+		console.log(user);
+		if (user !== undefined)
+			res.status(200).send(JSON.stringify({ userFound: true, ...user }));
+		else res.status(200).send(JSON.stringify({ userFound: false }));
 	});
 
 	console.log("🛠️  Applying API router to Express server...");

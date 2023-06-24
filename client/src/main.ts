@@ -9,6 +9,7 @@ import { State } from "./states/state";
 import { States } from "./states/states";
 import { clear, print, prompt } from "./ui/console";
 import { addUser } from "./menu/options/add_user/add_user";
+import { browseUsers } from "./menu/options/browse_users/browse_users";
 
 async function begin() {
 	clear(true);
@@ -51,6 +52,11 @@ const stateActions = (state: States) => {
 		BROWSE_POSTS: async () => {
 			clear();
 			await browsePosts();
+			return "MENU" as States;
+		},
+		BROWSE_USERS: async () => {
+			clear();
+			await browseUsers();
 			return "MENU" as States;
 		},
 		ADD_USER: async () => {
