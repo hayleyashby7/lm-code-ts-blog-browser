@@ -5,6 +5,7 @@ import { sendMessage } from "./menu/options/send_message/send_message";
 import { showAllPosts } from "./menu/options/show_all_posts/show_all_posts";
 import { showAllUsers } from "./menu/options/show_all_users/show_all_users";
 import { State } from "./states/state";
+import { States } from "./states/states";
 import { clear, print, printNewLine, prompt } from "./ui/console";
 
 async function begin() {
@@ -18,54 +19,51 @@ async function main() {
 	let state: State = new State();
 
 	while (true) {
-		console.log(state.get());
-		switch (state.get()) {
-			case "MENU":
-				const newMenuOption = await showMenu();
-				state.set(newMenuOption);
-				break;
-			case "SEND_MESSAGE":
-				const nextState = await sendMessage();
-				state.set(nextState);
-				break;
-			case "SHOW_POSTS":
-				clear();
-				const posts = await showAllPosts();
-				state.set("MENU");
-				break;
-			case "SHOW_USERS":
-				clear();
-				const users = await showAllUsers();
-				state.set("MENU");
-				break;
-			case "BROWSE_POSTS":
-				clear();
-				const post = await browsePosts();
-				state.set("MENU");
-				break;
-			case "ADD_USER":
-				clear();
-				print("🏗️  This functionality has not been implemented!");
-				await prompt("⌨️ Press [ENTER] to return to the main menu! 🕶️");
-				state.set("MENU");
-				break;
-			case "UNKNOWN":
-				clear();
-				print("😵 We have entered an unknown state.");
-				await prompt("⌨️ Press [ENTER] to return to the main menu! 🕶️");
-				state.set("MENU");
-				break;			
-			default:
-				clear();
-				print(`🌋 😱 Uh-oh, we've entered an invalid state: "${state.get()}"`);
-				print("💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥", false);
-				print("💥 Crashing the program now...  💥", false);
-				print("💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥", false);
-				printNewLine();
-				exit(99);
-				break;
-		}
+		const action = stateActions(state.get());
+		state.set((await action()) as States);
 	}
 }
 
 begin();
+
+const stateActions = (state: States) => {
+	const actions = {
+		MENU: async () => {
+			const choice = await showMenu();
+			return choice;
+		},
+		SEND_MESSAGE: async () => {
+			await sendMessage();
+			return "MENU" as States;
+		},
+		SHOW_POSTS: async () => {
+			clear();
+			await showAllPosts();
+			return "MENU" as States;
+		},
+		SHOW_USERS: async () => {
+			clear();
+			await showAllUsers();
+			return "MENU" as States;
+		},
+		BROWSE_POSTS: async () => {
+			clear();
+			await browsePosts();
+			return "MENU" as States;
+		},
+		ADD_USER: async () => {
+			clear();
+			print("🏗️  This functionality has not been implemented!");
+			await prompt("⌨️ Press [ENTER] to return to the main menu! 🕶️");
+			return "MENU" as States;
+		},
+		UNKNOWN: async () => {
+			clear();
+			print("😵 We have entered an unknown state.");
+			await prompt("⌨️ Press [ENTER] to return to the main menu! 🕶️");
+			return "MENU" as States;
+		},
+	};
+
+	return actions[state];
+};
