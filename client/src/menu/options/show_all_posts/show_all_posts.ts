@@ -1,8 +1,8 @@
 import { fetchAllPosts } from "../../../api/fetch_all_posts";
-import { clear, print, prompt, printNewLine } from "../../../ui/console";
+import { clear, print, printNewLine } from "../../../ui/console";
 import { returnToMainMenu } from "../../menu";
 
-export async function showAllPosts() {
+export async function showAllPosts(): Promise<void> {
 	clear(true);
 
 	printNewLine();
@@ -15,7 +15,5 @@ export async function showAllPosts() {
 
 	console.log(result);
 
-	returnToMainMenu();
-
-	return result;
+	await returnToMainMenu();
 }

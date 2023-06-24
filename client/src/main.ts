@@ -55,13 +55,13 @@ const stateActions = (state: States) => {
 		ADD_USER: async () => {
 			clear();
 			print("🏗️  This functionality has not been implemented!");
-			returnToMainMenu();
+			await returnToMainMenu();
 			return "MENU" as States;
 		},
 		UNKNOWN: async () => {
 			clear();
 			print("😵 We have entered an unknown state.");
-			returnToMainMenu();
+			await returnToMainMenu();
 			return "MENU" as States;
 		},
 	};

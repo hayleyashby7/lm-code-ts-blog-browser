@@ -25,11 +25,11 @@ export async function browsePosts(): Promise<void> {
 
 	console.log(result);
 
-	returnToMainMenu();
+	await returnToMainMenu();
 }
 
-const invalidPost = async () => {
+const invalidPost = async (): Promise<void> => {
 	print("🚨 Invalid Post ID! 🚨");
 
-	returnToMainMenu();
+	await returnToMainMenu();
 };
