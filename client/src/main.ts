@@ -5,7 +5,6 @@ import { sendMessage } from "./menu/options/send_message/send_message";
 import { showAllPosts } from "./menu/options/show_all_posts/show_all_posts";
 import { showAllUsers } from "./menu/options/show_all_users/show_all_users";
 import { State } from "./states/state";
-import { states } from "./states/states";
 import { clear, print, printNewLine, prompt } from "./ui/console";
 
 async function begin() {
@@ -16,9 +15,10 @@ async function begin() {
 }
 
 async function main() {
-	let state = new State();
+	let state: State = new State();
 
 	while (true) {
+		console.log(state.get());
 		switch (state.get()) {
 			case "MENU":
 				const newMenuOption = await showMenu();
@@ -31,39 +31,30 @@ async function main() {
 			case "SHOW_POSTS":
 				clear();
 				const posts = await showAllPosts();
-				state.set(states.MENU);
+				state.set("MENU");
 				break;
 			case "SHOW_USERS":
 				clear();
 				const users = await showAllUsers();
-				state.set(states.MENU);
+				state.set("MENU");
 				break;
 			case "BROWSE_POSTS":
 				clear();
 				const post = await browsePosts();
-				state.set(states.MENU);
+				state.set("MENU");
 				break;
 			case "ADD_USER":
 				clear();
 				print("🏗️  This functionality has not been implemented!");
 				await prompt("⌨️ Press [ENTER] to return to the main menu! 🕶️");
-				state.set(states.MENU);
+				state.set("MENU");
 				break;
 			case "UNKNOWN":
 				clear();
 				print("😵 We have entered an unknown state.");
 				await prompt("⌨️ Press [ENTER] to return to the main menu! 🕶️");
-				state.set(states.MENU);
-				break;
-			case "CABBAGE":
-				clear();
-				print("🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬", false);
-				print("🥬      CABBAGE MODE UNLOCKED     🥬", false);
-				print("🥬     Why did you want this?     🥬", false);
-				print("🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬🥬", false);
-				await prompt("⌨️ Press [ENTER] to return to the main menu! 🕶️");
-				state.set(states.MENU);
-				break;
+				state.set("MENU");
+				break;			
 			default:
 				clear();
 				print(`🌋 😱 Uh-oh, we've entered an invalid state: "${state.get()}"`);
