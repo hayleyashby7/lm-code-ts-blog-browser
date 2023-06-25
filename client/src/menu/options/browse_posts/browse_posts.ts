@@ -1,7 +1,19 @@
 import { fetchPost } from "../../../api/fetch_post";
 import { clear, print, prompt } from "../../../ui/console";
 import { inputValidator } from "../utils/input";
-import { returnToMainMenu } from "../../menu";
+import { returnToMainMenu, menuOption } from "../../menu";
+
+export const addBrowsePostsOption = (id: number): menuOption => {
+	const option: menuOption = {
+		id: id,
+		description: "Browse posts",
+		action: () => {
+			return browsePosts();
+		},
+	};
+
+	return option;
+};
 
 const validIDRegEx = /^\d+$/;
 

@@ -1,8 +1,20 @@
 import { sendMessageToServer } from "../../../api/send_message_to_server";
 import { clear, print, printNewLine, prompt } from "../../../ui/console";
-import { returnToMainMenu } from "../../menu";
+import { returnToMainMenu, menuOption } from "../../menu";
 
-export async function sendMessage(): Promise<void> {
+export const addSendMessageOption = (id: number): menuOption => {
+	const option: menuOption = {
+		id: id,
+		description: "Send Server Message",
+		action: () => {
+			return sendMessage();
+		},
+	};
+
+	return option;
+};
+
+async function sendMessage(): Promise<void> {
 	clear();
 
 	const message = await prompt("What message shall we send? ");

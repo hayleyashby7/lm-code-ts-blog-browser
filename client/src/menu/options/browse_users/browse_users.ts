@@ -1,7 +1,19 @@
 import { fetchUser } from "../../../api/fetch_user";
 import { clear, print, prompt } from "../../../ui/console";
 import { inputValidator } from "../utils/input";
-import { returnToMainMenu } from "../../menu";
+import { returnToMainMenu, menuOption } from "../../menu";
+
+export const addBrowseUsersOption = (id: number): menuOption => {
+	const option: menuOption = {
+		id: id,
+		description: "Browse users",
+		action: () => {
+			return browseUsers();
+		},
+	};
+
+	return option;
+};
 
 const validIDRegEx = /^\d+$/;
 

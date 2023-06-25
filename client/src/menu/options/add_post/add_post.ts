@@ -1,6 +1,18 @@
 import { add_new_post } from "../../../api/add_post";
 import { clear, print, printNewLine, prompt } from "../../../ui/console";
-import { returnToMainMenu } from "../../menu";
+import { returnToMainMenu, menuOption } from "../../menu";
+
+export const addPostOption = (id: number): menuOption => {
+	const option: menuOption = {
+		id: id,
+		description: "Add post",
+		action: () => {
+			return addPost();
+		},
+	};
+
+	return option;
+};
 
 export async function addPost(): Promise<void> {
 	clear();

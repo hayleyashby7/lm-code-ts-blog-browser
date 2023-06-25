@@ -1,61 +1,34 @@
 import { States } from "../states/states";
 import { clear, print, printNewLine, prompt } from "../ui/console";
+import { addPostOption } from "./options/add_post/add_post";
+import { addUserOption } from "./options/add_user/add_user";
+import { addBrowsePostsOption } from "./options/browse_posts/browse_posts";
+import { addBrowseUsersOption } from "./options/browse_users/browse_users";
+import { addSendMessageOption } from "./options/send_message/send_message";
+import { addAllPostsOption } from "./options/show_all_posts/show_all_posts";
+import { addAllUsersOption } from "./options/show_all_users/show_all_users";
 
-type menuOption = { id: number; description: string; action: () => States };
+export type menuOption = {
+	id: number;
+	description: string;
+	action: () => Promise<void>;
+};
 
-const menuOptions: menuOption[] = [
-	{
-		id: 0,
-		description: "Send Server Message",
-		action: () => {
-			return "SEND_MESSAGE";
-		},
-	},
-	{
-		id: 1,
-		description: "Show all posts",
-		action: () => {
-			return "SHOW_POSTS";
-		},
-	},
-	{
-		id: 2,
-		description: "Show all users",
-		action: () => {
-			return "SHOW_USERS";
-		},
-	},
-	{
-		id: 3,
-		description: "Browse posts",
-		action: () => {
-			return "BROWSE_POSTS";
-		},
-	},
-	{
-		id: 4,
-		description: "Browse users",
-		action: () => {
-			return "BROWSE_USERS";
-		},
-	},
-	{
-		id: 5,
-		description: "Add post",
-		action: () => {
-			return "ADD_POST";
-		},
-	},
-	{
-		id: 6,
-		description: "Add user",
-		action: () => {
-			return "ADD_USER";
-		},
-	},
-];
+const menuOptions: menuOption[] = [];
+
+export const setupMenu = () => {
+	menuOptions.push(addSendMessageOption(0));
+	menuOptions.push(addAllPostsOption(1));
+	menuOptions.push(addAllUsersOption(2));
+	menuOptions.push(addBrowsePostsOption(3));
+	menuOptions.push(addBrowseUsersOption(4));
+	menuOptions.push(addPostOption(5));
+	menuOptions.push(addUserOption(6));
+};
 
 export async function showMenu(): Promise<States> {
+	if (!menuOptions.length) setupMenu();
+
 	clear();
 	menuOptions.forEach((option) =>
 		print(`${option.id}. ${option.description}`, false)
@@ -66,9 +39,11 @@ export async function showMenu(): Promise<States> {
 
 	const option = menuOptions.find((option) => option.id.toString() === result);
 
-	if (option) return option.action();
+	if (!option) return "UNKNOWN";
 
-	return "UNKNOWN";
+	await option.action();
+
+	return "MENU";
 }
 
 export async function returnToMainMenu() {

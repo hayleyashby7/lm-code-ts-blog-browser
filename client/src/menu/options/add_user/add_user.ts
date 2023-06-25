@@ -1,6 +1,18 @@
 import { add_new_user } from "../../../api/add_user";
 import { clear, print, printNewLine, prompt } from "../../../ui/console";
-import { returnToMainMenu } from "../../menu";
+import { returnToMainMenu, menuOption } from "../../menu";
+
+export const addUserOption = (id: number): menuOption => {
+	const option: menuOption = {
+		id: id,
+		description: "Add user",
+		action: () => {
+			return addUser();
+		},
+	};
+
+	return option;
+};
 
 export async function addUser(): Promise<void> {
 	clear();

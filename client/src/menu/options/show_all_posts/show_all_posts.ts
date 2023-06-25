@@ -1,6 +1,18 @@
 import { fetchAllPosts } from "../../../api/fetch_all_posts";
 import { clear, print, printNewLine } from "../../../ui/console";
-import { returnToMainMenu } from "../../menu";
+import { returnToMainMenu, menuOption } from "../../menu";
+
+export const addAllPostsOption = (id: number): menuOption => {
+	const option: menuOption = {
+		id: id,
+		description: "Show all posts",
+		action: () => {
+			return showAllPosts();
+		},
+	};
+
+	return option;
+};
 
 export async function showAllPosts(): Promise<void> {
 	clear(true);

@@ -1,16 +1,9 @@
 import "dotenv/config";
 import { exit } from "./exit/exit";
 import { returnToMainMenu, showMenu } from "./menu/menu";
-import { browsePosts } from "./menu/options/browse_posts/browse_posts";
-import { sendMessage } from "./menu/options/send_message/send_message";
-import { showAllPosts } from "./menu/options/show_all_posts/show_all_posts";
-import { showAllUsers } from "./menu/options/show_all_users/show_all_users";
 import { State } from "./states/state";
 import { States } from "./states/states";
 import { clear, print, prompt } from "./ui/console";
-import { addUser } from "./menu/options/add_user/add_user";
-import { browseUsers } from "./menu/options/browse_users/browse_users";
-import { addPost } from "./menu/options/add_post/add_post";
 
 async function begin() {
 	clear(true);
@@ -23,52 +16,16 @@ async function main() {
 	let state: State = new State();
 
 	while (true) {
-		const action = stateActions(state.get()) || stateActions("DEFAULT");
-		state.set((await action()) as States);
+		state.set((await stateActions(state.get())) || stateActions("DEFAULT"));
 	}
 }
 
 begin();
 
-const stateActions = (state: States) => {
+async function stateActions(state: States): Promise<States> {
 	const actions = {
 		MENU: async () => {
-			const choice = await showMenu();
-			return choice;
-		},
-		SEND_MESSAGE: async () => {
-			await sendMessage();
-			return "MENU" as States;
-		},
-		SHOW_POSTS: async () => {
-			clear();
-			await showAllPosts();
-			return "MENU" as States;
-		},
-		SHOW_USERS: async () => {
-			clear();
-			await showAllUsers();
-			return "MENU" as States;
-		},
-		BROWSE_POSTS: async () => {
-			clear();
-			await browsePosts();
-			return "MENU" as States;
-		},
-		BROWSE_USERS: async () => {
-			clear();
-			await browseUsers();
-			return "MENU" as States;
-		},
-		ADD_USER: async () => {
-			clear();
-			await addUser();
-			return "MENU" as States;
-		},
-		ADD_POST: async () => {
-			clear();
-			await addPost();
-			return "MENU" as States;
+			return await showMenu();
 		},
 		UNKNOWN: async () => {
 			clear();
@@ -76,10 +33,11 @@ const stateActions = (state: States) => {
 			await returnToMainMenu();
 			return "MENU" as States;
 		},
-		DEFAULT: () => {
+		DEFAULT: async () => {
 			exit(99);
+			return "DEFAULT" as States;
 		},
 	};
 
-	return actions[state];
-};
+	return await actions[state]();
+}
