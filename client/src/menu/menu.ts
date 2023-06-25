@@ -35,7 +35,11 @@ export async function showMenu(): Promise<States> {
 	);
 	printNewLine();
 
+	print("Press X to exit", true);
+
 	const result = await prompt("What shall we do? ");
+
+	if (result.toUpperCase() === "X") return "EXIT";
 
 	const option = menuOptions.find((option) => option.id.toString() === result);
 

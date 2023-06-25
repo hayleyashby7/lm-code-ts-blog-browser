@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { exit } from "./exit/exit";
+import { exit, exitConfirmed } from "./exit/exit";
 import { returnToMainMenu, showMenu } from "./menu/menu";
 import { State } from "./states/state";
 import { States } from "./states/states";
@@ -32,6 +32,12 @@ async function stateActions(state: States): Promise<States> {
 			print("😵 We have entered an unknown state.");
 			await returnToMainMenu();
 			return "MENU" as States;
+		},
+		EXIT: async () => {
+			if (!(await exitConfirmed())) return "MENU" as States;
+			print("👋 Bye bye!");
+			exit(0);
+			return "EXIT" as States;
 		},
 		DEFAULT: async () => {
 			exit(99);

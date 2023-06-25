@@ -1,6 +1,7 @@
 const states = {
 	MENU: "MENU",
 	UNKNOWN: "UNKNOWN",
+	EXIT: "EXIT",
 	DEFAULT: "DEFAULT",
 } as const;
 
