@@ -30,18 +30,14 @@ export async function showMenu(): Promise<States> {
 	if (!menuOptions.length) setupMenu();
 
 	clear();
-	menuOptions.forEach((option) =>
-		print(`${option.id}. ${option.description}`, false)
-	);
-	printNewLine();
 
-	print("Press X to exit", true);
+	printMenu();
 
 	const result = await prompt("What shall we do? ");
 
 	if (result.toUpperCase() === "X") return "EXIT";
 
-	const option = menuOptions.find((option) => option.id.toString() === result);
+	const option = findOption(result);
 
 	if (!option) return "UNKNOWN";
 
@@ -55,3 +51,15 @@ export async function returnToMainMenu() {
 
 	await prompt("⌨️ Press [ENTER] to return to the main menu! 🕶️");
 }
+
+const printMenu = (): void => {
+	menuOptions.forEach((option) =>
+		print(`${option.id}. ${option.description}`, false)
+	);
+	printNewLine();
+
+	print("Press X to exit", true);
+};
+
+const findOption = (id: string): menuOption | undefined =>
+	menuOptions.find((option) => option.id.toString() === id);
