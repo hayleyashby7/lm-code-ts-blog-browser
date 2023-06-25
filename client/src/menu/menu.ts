@@ -41,6 +41,13 @@ const menuOptions: menuOption[] = [
 	},
 	{
 		id: 5,
+		description: "Add post",
+		action: () => {
+			return "ADD_POST";
+		},
+	},
+	{
+		id: 6,
 		description: "Add user",
 		action: () => {
 			return "ADD_USER";

@@ -10,6 +10,7 @@ import { States } from "./states/states";
 import { clear, print, prompt } from "./ui/console";
 import { addUser } from "./menu/options/add_user/add_user";
 import { browseUsers } from "./menu/options/browse_users/browse_users";
+import { addPost } from "./menu/options/add_post/add_post";
 
 async function begin() {
 	clear(true);
@@ -62,6 +63,11 @@ const stateActions = (state: States) => {
 		ADD_USER: async () => {
 			clear();
 			await addUser();
+			return "MENU" as States;
+		},
+		ADD_POST: async () => {
+			clear();
+			await addPost();
 			return "MENU" as States;
 		},
 		UNKNOWN: async () => {
