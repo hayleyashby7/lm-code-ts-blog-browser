@@ -8,5 +8,5 @@ export type Post = {
 	id: string;
 	title: string;
 	text: string;
-	author: User;
+	author: User | undefined;
 };

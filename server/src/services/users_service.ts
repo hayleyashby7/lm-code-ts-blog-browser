@@ -24,9 +24,11 @@ const users: User[] = [
 ];
 
 export function getAllUsers(): User[] {
-	// in the absence of a true Model layer, our service can simply return a hard-coded array of users
-
 	return users;
+}
+
+export function getUserByID(id: string): User | undefined {
+	return users.find((user) => user.id === id);
 }
 
 export function addUser(name: string) {
@@ -40,3 +42,6 @@ export function addUser(name: string) {
 
 	return newUser;
 }
+
+export const userNameExists = (name: string): User | undefined =>
+	users.find((user) => user.name.toLowerCase() === name.toLowerCase());
